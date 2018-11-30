@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Message } from 'semantic-ui-react';
+import { Form, Button, Message, Grid } from 'semantic-ui-react';
 import getCookie from 'js-cookie';
 
 class Login extends Component {
@@ -49,23 +49,27 @@ class Login extends Component {
 	}
 	render() {
 		return (
-			<Form onSubmit={this.handleSubmit}>
-				<Message hidden={this.state.isValid}>
-					The Username/Password is incorrect. Please try again.
-				</Message>
-				<Message hidden={this.state.logOut}>
-					Logout Successful.
-				</Message>
-				<Form.Group>
-					<Form.Input label='Username' placeholder='Username' type='text' name='username' width={6} onChange={this.handleChange} /> 
-				</Form.Group>
-				<Form.Group>
-					<Form.Input label='Password' placeholder='Password' type='password' name='password' width={6} onChange={this.handleChange} />
-				</Form.Group>
-				<Form.Group>
-					<Button type='Submit'>Login</Button>
-				</Form.Group>
-			</Form>
+			<Grid columns={2} divided textAlign='center' style={{ width: '100%' }} verticalAlign='top' stackable>
+				<Grid.Column>
+					<Form onSubmit={this.handleSubmit}>
+						<Message hidden={this.state.isValid}>
+							The Username/Password is incorrect. Please try again.
+						</Message>
+						<Message hidden={this.state.logOut}>
+							Logout Successful.
+						</Message>
+						<Form.Group>
+							<Form.Input label='Username' placeholder='Username' type='text' name='username' width={6} onChange={this.handleChange} /> 
+						</Form.Group>
+						<Form.Group>
+							<Form.Input label='Password' placeholder='Password' type='password' name='password' width={6} onChange={this.handleChange} />
+						</Form.Group>
+						<Form.Group>
+							<Button type='Submit'>Login</Button>
+						</Form.Group>
+					</Form>
+				</Grid.Column>
+			</Grid>
 		)
 	}
 }

@@ -4,6 +4,7 @@ import { Grid } from 'semantic-ui-react';
 import CreatePet from '../CreatePet';
 // import CreatePost from './CreatePet';
 // import CreatePhoto from './CreatePet';
+import PetList from '../PetList'
 
 class UserContainer extends Component {
 	constructor(){
@@ -88,6 +89,7 @@ class UserContainer extends Component {
 	}
 	addPet = async (pet, e) => {
 		e.preventDefault();
+		e.target.reset();
 		pet.age = parseInt(pet.age)
 		const csrfCookie = getCookie('csrftoken');
 
@@ -105,6 +107,25 @@ class UserContainer extends Component {
 			const newPetParsed = await newPet.json();
 			this.setState({pets: [...this.state.pets, newPetParsed.data]})
 		} catch(err){
+			console.log(err);
+		}
+	}
+	deletePet = async (id) => {
+		try {
+			const csrfCookie = getCookie('csrftoken');
+			const deletePet = await fetch('http://localhost:8000/profile/pets/' + id, {
+				method: 'DELETE',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': csrfCookie
+				}
+			})
+			const deletedPetParsed = await deletePet.json()
+			this.setState({
+				pets: this.state.pets.filter((pet) => pet.id !== id) 
+			})
+		} catch(err) {
 			console.log(err);
 		}
 	}
@@ -151,9 +172,12 @@ class UserContainer extends Component {
 	render(){
 		return(
 			<Grid columns={3} divided textAlign='center' style={{ height: '100%' }} verticalAlign='top' stackable>
-				<Grid.Row>
-				<CreatePet addPet={this.addPet}/>
-				</Grid.Row>
+				<Grid.Column>
+					<CreatePet addPet={this.addPet}/>
+				</Grid.Column>
+				<Grid.Column>
+					<PetList pets={this.state.pets} deletePet={this.deletePet} />
+				</Grid.Column>
 			</Grid>
 		)
 	}
