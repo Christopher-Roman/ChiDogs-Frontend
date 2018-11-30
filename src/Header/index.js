@@ -7,10 +7,10 @@ const HeaderApp = (props) => {
 	return (
 		<Header>
 			<ul>
-				<li><a href='#'>Login</a></li>
-				<li><a href='#' onClick={props.handleLogout}>Logout</a></li>
-				<li><a href='/Register'>Register</a></li>
-				<li><a href='#'>Profile</a></li>
+				<li><Link to="/">Login</Link></li>
+		        <li><Link to="/" onClick={props.handleLogout}>Logout</Link></li>
+		        <li><Link to="/register">Register</Link></li>
+		        <li><Link to="/profile">Profile</Link></li>
 			</ul>
 		</Header>
 	)

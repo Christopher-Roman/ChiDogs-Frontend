@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import getCookie from 'js-cookie';
-import { Form, Label, Button } from 'semantic-ui-react';
+import { Form, Button} from 'semantic-ui-react';
 
 class Register extends Component {
 	constructor(){
@@ -29,7 +29,7 @@ class Register extends Component {
 
 		const parsedResponse = await registerReponse.json();
 		if(parsedResponse.data === 'Registration Successful') {
-			// this.props.history.push('/profile')
+			this.props.history.push('/profile')
 		}
 		else {
 			console.log('Could Not Register. Please try again.');
@@ -38,13 +38,18 @@ class Register extends Component {
 	render(){
 		return (
 			<Form onSubmit={this.handleSubmit}>
-				<Label>Username</Label>
-				<Form.Input type='text' name='username' onChange={this.handleChange} />
-				<Label>Email</Label>
-				<Form.Input type='text' name='email' onChange={this.handleChange} />
-				<Label>Password</Label>
-				<Form.Input type='password' name='password' onChange={this.handleChange} />
-				<Button type='Submit'>Register</Button>
+				<Form.Group>
+					<Form.Input label='Username' placeholder='Username' type='text' name='username' onChange={this.handleChange} /> 
+				</Form.Group>
+				<Form.Group>
+					<Form.Input label='Email' placeholder='Email' type='text' name='email' onChange={this.handleChange} />
+				</Form.Group>
+				<Form.Group>
+					<Form.Input label='Password' placeholder='Password' type='password' name='password' onChange={this.handleChange} />
+				</Form.Group>
+				<Form.Group>
+					<Button type='Submit'>Register</Button>
+				</Form.Group>
 			</Form>
 		)
 	}

@@ -1,9 +1,12 @@
 import './App.css';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
+import Login from './Login'
 import Register from './Register';
 import Header from './Header';
+import UserContainer from './UserContainer'
 import getCookie from 'js-cookie';
+
 
 const My404 = () => {
   return (
@@ -32,7 +35,7 @@ class App extends Component {
       if (logoutRequestParsed.data === 'Logout Successful') {
         
         console.log(`Logout Successful`);
-        // this.props.history.push('/')                            // Redirect to Login
+        this.props.history.push('/')                            // Redirect to Login
       
       } else {
         console.log(`logoutRequestParsed.error: `, logoutRequestParsed.error);
@@ -53,6 +56,21 @@ class App extends Component {
     const tokenParsed = token.json();
     return tokenParsed;
   }
+  // handleLogout = async (e) => {
+  //   e.preventDefault();
+  //   const cookie = getCookie('csrftoken');
+  //   const logoutResponse = await fetch('http://localhost:8000/users/logout/', {
+  //     method: 'POST',
+  //     credentials: 'include',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //   const logoutResponseParsed = await logoutResponse.json()
+  //   if(logoutResponseParsed.data === 'Logout Successful') {
+  //     this.props.history.push('/')
+  //   }
+  // }
   componentDidMount(){
     this.getToken();
   }
@@ -60,10 +78,15 @@ class App extends Component {
     return (
       <div className="App">
         <Header handleLogout={this.handleLogout}/>
-        <Register />
+        <Switch>
+          <Route exact path="/" component={Login}/>
+          <Route exact path="/register" component={Register}/>
+          <Route exact path="/profile/" component={UserContainer}/>
+          <Route component={My404}/>
+        </Switch>
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
