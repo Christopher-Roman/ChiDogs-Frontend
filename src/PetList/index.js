@@ -7,10 +7,12 @@ const PetList = (props) => {
 			<Card key={pet.id}>
 				<Card.Content>
 					<Card.Header>{pet.first_name}</Card.Header>
+					<Card.Description>{pet.middle_name}</Card.Description>
+					<Card.Description>{pet.age}</Card.Description>
 					<Card.Description>{pet.breed}</Card.Description>
 				</Card.Content>
 				<Card.Content extra>
-					<Button color='green'>Edit Pet</Button>
+					<Button color='green' onClick={props.openAndEditPet.bind(null, pet)}>Edit Pet</Button>
 					<Button color='red' onClick={props.deletePet.bind(null, pet.id)}>Remove</Button>
 				</Card.Content>
 			</Card>

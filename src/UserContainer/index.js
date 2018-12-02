@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import CreatePet from '../CreatePet';
+import EditPet from '../EditPet';
+import EditPost from '../EditPost';
+import PetList from '../PetList';
+import PostList from '../PostList';
+import CreatePost from '../CreatePost';
 import getCookie from 'js-cookie';
 import { Grid } from 'semantic-ui-react';
-import CreatePet from '../CreatePet';
-// import CreatePost from './CreatePet';
-// import CreatePhoto from './CreatePet';
-import PetList from '../PetList'
 
 class UserContainer extends Component {
 	constructor(){
@@ -19,7 +21,9 @@ class UserContainer extends Component {
 				middle_name: '',
 				last_name: '',
 				age: null,
-				breed: ''
+				breed: '',
+				owner: null,
+				_id: ''
 			},
 			postToEdit: {
 				post_body: ''
@@ -30,8 +34,9 @@ class UserContainer extends Component {
 			showPetEditModal: false,
 			showPostEditModal: false,
 			showReplyEditModal: false,
+			showPetCreateModal: false,
 			showPhotoUploadModal: false,
-			showPostModal: false,
+			showPostModal: false
 		}
 	}
 	getPet = async () => {
@@ -75,11 +80,11 @@ class UserContainer extends Component {
 			console.log(err);
 		})
 		// Mounting Post API call
-		// this.getPost().then(posts => {
-		// 	this.setState({posts: posts.data})
-		// }).catch((err) => {
-		// 	console.log(err);
-		// })
+		this.getPost().then(posts => {
+			this.setState({posts: posts.data})
+		}).catch((err) => {
+			console.log(err);
+		})
 		// Mounting Photos API call
 		// this.getPhoto().then(photos => {
 		// 	this.setState({photos: photos.data})
@@ -89,7 +94,6 @@ class UserContainer extends Component {
 	}
 	addPet = async (pet, e) => {
 		e.preventDefault();
-		e.target.reset();
 		pet.age = parseInt(pet.age)
 		const csrfCookie = getCookie('csrftoken');
 
@@ -110,6 +114,123 @@ class UserContainer extends Component {
 			console.log(err);
 		}
 	}
+	addPost = async (posts, e) => {
+		e.preventDefault();
+		const csrfCookie = getCookie('csrftoken');
+
+		try {
+			const newPost = await fetch('http://localhost:8000/profile/posts/', {
+				method: 'POST',
+				credentials: 'include',
+				body: JSON.stringify(posts),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': csrfCookie
+				}
+			})
+			const newPostParsed = await newPost.json();
+			this.setState({posts: [...this.state.posts, newPostParsed.data]})
+		} catch(err) {
+			console.error(err);
+		}
+	}
+	openAndEditPet = (pet) => {
+		this.setState({
+			showPetEditModal: true,
+			petToEdit: {
+				...pet
+			}
+		})
+	}
+	openAndEditPost = (post) => {
+		this.setState({
+			showPostEditModal: true,
+			postToEdit: {
+				...post
+			}
+		})
+	}
+	handlePetEditChange = (e) => {
+		this.setState({
+			petToEdit: {
+				...this.state.petToEdit,
+				[e.currentTarget.name]: e.currentTarget.value
+			}
+		});
+	}
+	handlePostEditChange = (e) => {
+		this.setState({
+			postToEdit: {
+				...this.state.postToEdit,
+				[e.currentTarget.name]: e.currentTarget.value
+			}
+		})
+	}
+	closeAndEditPet = async (e) => {
+		e.preventDefault();
+		try {
+			const csrfCookie = getCookie('csrftoken');
+			const editPet = await fetch('http://localhost:8000/profile/pets/' + this.state.petToEdit.id + '/', {
+				method: 'PUT',
+				credentials: 'include',
+				body: JSON.stringify({
+					first_name: this.state.petToEdit.first_name,
+					middle_name: this.state.petToEdit.middle_name,
+					last_name: this.state.petToEdit.last_name,
+					age: parseInt(this.state.petToEdit.age),
+					breed: this.state.petToEdit.breed
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': csrfCookie
+				}
+			})
+			const editPetResponse = await editPet.json();
+			console.log(editPetResponse);
+			const newPetArrayWithEdit = this.state.pets.map((pet) => {
+				if(pet.id === editPetResponse.data.id){
+					pet = editPetResponse.data
+				}
+				return pet
+			})
+			this.setState({
+				showPetEditModal: false,
+				pets: newPetArrayWithEdit
+			})
+		} catch(err) {
+			console.log(err);
+		}
+	}
+	closeAndEditPost = async (e) => {
+		e.preventDefault();
+		try {
+			const csrfCookie = getCookie('csrftoken');
+			const editPost = await fetch('http://localhost:8000/profile/posts/' + this.state.postToEdit.id + '/', {
+				method: 'PUT',
+				credentials: 'include',
+				body: JSON.stringify({
+					post_body: this.state.postToEdit.post_body
+				}),
+				headers:{
+					'Content-Type': 'application/json',
+					'X-CSRFToken': csrfCookie
+				}
+			})
+			const editPostResponse = await editPost.json();
+			const newPostArrayWithEdit = this.state.posts.map((post) => {
+				if(post.id === editPostResponse.data.id) {
+					post = editPostResponse.data
+				}
+				return post
+			})
+			this.setState({
+				showPostEditModal: false,
+				posts: newPostArrayWithEdit
+			})
+		}catch(err) {
+			console.error(err)
+		}
+	}
 	deletePet = async (id) => {
 		try {
 			const csrfCookie = getCookie('csrftoken');
@@ -121,7 +242,7 @@ class UserContainer extends Component {
 					'X-CSRFToken': csrfCookie
 				}
 			})
-			const deletedPetParsed = await deletePet.json()
+			// const deletedPetParsed = await deletePet.json()
 			this.setState({
 				pets: this.state.pets.filter((pet) => pet.id !== id) 
 			})
@@ -129,24 +250,22 @@ class UserContainer extends Component {
 			console.log(err);
 		}
 	}
-	addPost = async (post, e) => {
-		e.preventDefault();
-		const csrfCookie = getCookie('csrftoken');
-
+	deletePost = async (id) => {
 		try {
-			const newPost = await fetch('http://localhost:8000/profile/posts/', {
-				method: 'POST',
+			const csrfCookie = getCookie('csrftoken');
+			const deletePost = await fetch('http://localhost:8000/profile/posts/' + id, {
+				method: 'DELETE',
 				credentials: 'include',
-				body: JSON.stringify(post),
 				headers: {
 					'Content-Type': 'application/json',
 					'X-CSRFToken': csrfCookie
 				}
 			})
-			const newPostParsed = newPost.json();
-			this.setState({posts: [...this.state.posts, newPostParsed]})
+			this.setState({
+				posts: this.state.posts.filter((post) => post.id !== id)
+			})
 		} catch(err) {
-			console.log(err);
+			console.error(err)
 		}
 	}
 	addPhoto = async (photo, e) => {
@@ -174,9 +293,15 @@ class UserContainer extends Component {
 			<Grid columns={3} divided textAlign='center' style={{ height: '100%' }} verticalAlign='top' stackable>
 				<Grid.Column>
 					<CreatePet addPet={this.addPet}/>
+					<CreatePost addPost={this.addPost}/>
 				</Grid.Column>
 				<Grid.Column>
-					<PetList pets={this.state.pets} deletePet={this.deletePet} />
+					<PetList pets={this.state.pets} deletePet={this.deletePet} openAndEditPet={this.openAndEditPet} />
+					<EditPet open={this.state.showPetEditModal} petToEdit={this.state.petToEdit} handlePetEditChange={this.handlePetEditChange} closeAndEditPet={this.closeAndEditPet} />
+				</Grid.Column>
+				<Grid.Column>
+					<PostList posts={this.state.posts} deletePost={this.deletePost} openAndEditPost={this.openAndEditPost} />
+					<EditPost open={this.state.showPostEditModal} postToEdit={this.state.postToEdit} handlePostEditChange={this.handlePostEditChange} closeAndEditPost={this.closeAndEditPost} />
 				</Grid.Column>
 			</Grid>
 		)
@@ -184,8 +309,3 @@ class UserContainer extends Component {
 }
 
 export default UserContainer;
-
-
-
-
-

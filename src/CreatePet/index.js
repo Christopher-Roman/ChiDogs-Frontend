@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Label, Segment } from 'semantic-ui-react';
+import { Form, Button, Label, Segment, Header } from 'semantic-ui-react';
 
 class CreatePet extends Component {
 	constructor(){
@@ -9,7 +9,8 @@ class CreatePet extends Component {
 			middle_name: '',
 			last_name: '',
 			age: '',
-			breed: ''
+			breed: '',
+
 		}
 	}
 	updatePet = (e) => {
@@ -18,7 +19,7 @@ class CreatePet extends Component {
 	render() {
 		return (
 			<Segment>
-				<h4>Add a New Pet!</h4>
+				<Header>Add a Pet!</Header>
 				<Form onSubmit={this.props.addPet.bind(null, this.state)}>
 					<Label>First Name</Label>
 					<Form.Input type='text' name='first_name' value={this.state.first_name} onChange={this.updatePet}/>
@@ -32,8 +33,9 @@ class CreatePet extends Component {
 					<Form.Input type='text' name='breed' value={this.state.breed} onChange={this.updatePet}/>
 					<Button type='Submit'>Add New Pet</Button>
 				</Form>
-			</Segment>
+			</Segment>		
 		)
 	}
 }
+
 export default CreatePet;
