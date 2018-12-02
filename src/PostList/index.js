@@ -11,7 +11,7 @@ const PostList = (props) => {
 				</Card.Content>
 				<Card.Content extra>
 					<Button onClick={props.openAndEditPost.bind(null, post)}>Edit</Button>
-					<Button onClick={props.deletePost.bind(null, post)}>Delete</Button>
+					<Button onClick={props.deletePost.bind(null, post.id)}>Delete</Button>
 				</Card.Content>
 			</Card>
 		)
