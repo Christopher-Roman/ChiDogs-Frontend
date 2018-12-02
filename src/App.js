@@ -4,7 +4,9 @@ import React, { Component } from 'react';
 import Login from './Login'
 import Register from './Register';
 import Header from './Header';
-import UserContainer from './UserContainer'
+import UserContainer from './UserContainer';
+import PetContainer from './PetContainer';
+import PhotoContainer from './PhotoContainer';
 import getCookie from 'js-cookie';
 
 
@@ -56,21 +58,6 @@ class App extends Component {
     const tokenParsed = token.json();
     return tokenParsed;
   }
-  // handleLogout = async (e) => {
-  //   e.preventDefault();
-  //   const cookie = getCookie('csrftoken');
-  //   const logoutResponse = await fetch('http://localhost:8000/users/logout/', {
-  //     method: 'POST',
-  //     credentials: 'include',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //   const logoutResponseParsed = await logoutResponse.json()
-  //   if(logoutResponseParsed.data === 'Logout Successful') {
-  //     this.props.history.push('/')
-  //   }
-  // }
   componentDidMount(){
     this.getToken();
   }
@@ -81,7 +68,9 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Login}/>
           <Route exact path="/register" component={Register}/>
-          <Route exact path="/profile/" component={UserContainer}/>
+          <Route exact path="/profile" component={UserContainer}/>
+          <Route exact path="/profile/pets" component={PetContainer}/>
+          <Route exact path="/profile/photos" component={PhotoContainer}/>
           <Route component={My404}/>
         </Switch>
       </div>
