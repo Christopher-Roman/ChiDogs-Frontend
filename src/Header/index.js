@@ -20,9 +20,6 @@ const HeaderApp = (props) => {
 	        </Menu.Item>
 			<Menu.Menu position='right'>
 				<Menu.Item>
-				<Link to="/">Login</Link>
-				</Menu.Item>
-				<Menu.Item>
 		        <Link to="/" onClick={props.handleLogout}>Logout</Link>
 		        </Menu.Item>
 		        <Menu.Item>

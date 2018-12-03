@@ -14,7 +14,7 @@ class PhotoContainer extends Component {
 	}
 	getPhotos = async () => {
 		const csrfCookie = getCookie('csrftoken');
-		const photos = await fetch('http://localhost:8000/profile/photos/', {
+		const photos = await fetch('http://localhost:8000/profile/photos', {
 			'credentials': 'include',
 			headers: {
 				'X-CSRFToken': csrfCookie
@@ -35,7 +35,7 @@ class PhotoContainer extends Component {
 		const csrfCookie = getCookie('csrftoken');
 
 		try {
-			const newPhoto = await fetch('http://localhost:8000/profile/photos', {
+			const newPhoto = await fetch('http://localhost:8000/profile/photos/', {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify(photo),
@@ -45,7 +45,7 @@ class PhotoContainer extends Component {
 				}
 			})
 			const newPhotoParsed = await newPhoto.json();
-
+			
 			this.setState({photos: [...this.state.photos, newPhotoParsed.data]})
 		} catch(err) {
 			console.error(err)
