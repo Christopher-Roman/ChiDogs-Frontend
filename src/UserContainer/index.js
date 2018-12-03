@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import CreatePet from '../CreatePet';
-import EditPet from '../EditPet';
 import EditPost from '../EditPost';
-import PetList from '../PetList';
 import PostList from '../PostList';
 import CreatePost from '../CreatePost';
 import getCookie from 'js-cookie';

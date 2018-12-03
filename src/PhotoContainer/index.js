@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import CreatePhoto from '../CreatePhoto';
 import PhotoList from '../PhotoList';
+import ViewPhoto from '../ViewPhoto'
 import getCookie from 'js-cookie';
 import { Grid } from 'semantic-ui-react';
+
 
 class PhotoContainer extends Component {
 	constructor(){
@@ -10,6 +12,12 @@ class PhotoContainer extends Component {
 
 		this.state = {
 			photos: [],
+			viewPhotosModal: false,
+			photoToView: {
+				picture_url: '',
+				created_by: null,
+				id: null
+			}
 		}
 	}
 	getPhotos = async () => {
@@ -69,6 +77,19 @@ class PhotoContainer extends Component {
 			console.error(err)
 		}
 	}
+	openPhotoModal = (photoFromList) => {
+		this.setState({
+			viewPhotosModal: true,
+			photoToView: {
+				...photoFromList
+			}
+		})
+	}
+	closePhotoModal = (e) => {
+		this.setState({
+			viewPhotosModal: false
+		})
+	}
 	render() {
 		return (
 			<Grid columns={2} divided style={{ height: '100%' }} verticalAlign='top' stackable>
@@ -77,6 +98,8 @@ class PhotoContainer extends Component {
 						<CreatePhoto addPhoto={this.addPhoto} />
 					</Grid.Column>
 					<Grid.Column>
+						<PhotoList photos={this.state.photos} openPhotoModal={this.openPhotoModal} deletePhoto={this.deletePhoto}/>
+						<ViewPhoto open={this.state.viewPhotosModal} photoToView={this.state.photoToView} closePhotoModal={this.closePhotoModal} />
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
