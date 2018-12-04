@@ -2,7 +2,6 @@ import React from 'react';
 import { Modal, Button, Image, Header } from 'semantic-ui-react'
 
 const PetView = (props) => {
-	console.log(props);
 	return (
 		<Modal open={props.open}>
 			<Modal.Header>{props.petToView.first_name} {props.petToView.middle_name} {props.petToView.last_name}</Modal.Header>

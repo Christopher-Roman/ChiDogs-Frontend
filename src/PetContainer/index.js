@@ -80,9 +80,6 @@ class PetContainer extends Component {
 	}
 	addPet = async (pet, e) => {
 		e.preventDefault();
-		console.log('%%%%%%%%%%%%%%%%%');
-		console.log('route was hit');
-		console.log('%%%%%%%%%%%%%%%%%');
 		pet.age = parseInt(pet.age)
 		pet.weight = parseInt(pet.weight)
 		const csrfCookie = getCookie('csrftoken');
@@ -120,6 +117,38 @@ class PetContainer extends Component {
 			}
 		})
 	}
+	breedData = (e, data) => {
+		this.setState({
+			petToEdit: {
+				...this.state.petToEdit,
+				breed: data.value
+			}	
+		})
+	}
+	peopleData = (e, data) => {
+		this.setState({
+			petToEdit: {
+				...this.state.petToEdit,
+				likes_people: data.value
+			}
+		})
+	}
+	dogsData = (e, data) => {
+		this.setState({
+			petToEdit: {
+				...this.state.petToEdit,
+				likes_dogs: data.value
+			}
+		})
+	}
+	fixedData = (e, data) => {
+		this.setState({
+			petToEdit: {
+				...this.state.petToEdit,
+				fixed: data.value
+			}
+		})
+	}
 	closeViewPetModal = (pet) => {
 		this.setState({
 			petViewModal: false,
@@ -144,8 +173,18 @@ class PetContainer extends Component {
 					first_name: this.state.petToEdit.first_name,
 					middle_name: this.state.petToEdit.middle_name,
 					last_name: this.state.petToEdit.last_name,
+					pet_photo: this.state.petToEdit.pet_photo,
 					age: parseInt(this.state.petToEdit.age),
-					breed: this.state.petToEdit.breed
+					breed: this.state.petToEdit.breed,
+					weight: this.state.petToEdit.weight,
+					likes_people: this.state.petToEdit.likes_people,
+					likes_dogs: this.state.petToEdit.likes_dogs,
+					loves_to: this.state.petToEdit.loves_to,
+					fav_treat: this.state.petToEdit.fav_treat,
+					vet_name: this.state.petToEdit.vet_name,
+					vet_phone: this.state.petToEdit.vet_phone,
+					vet_address: this.state.petToEdit.vet_address,
+					fixed: this.state.petToEdit.fixed
 				}),
 				headers: {
 					'Content-Type': 'application/json',
@@ -153,7 +192,6 @@ class PetContainer extends Component {
 				}
 			})
 			const editPetResponse = await editPet.json();
-			console.log(editPetResponse);
 			const newPetArrayWithEdit = this.state.pets.map((pet) => {
 				if(pet.id === editPetResponse.data.id){
 					pet = editPetResponse.data
@@ -201,7 +239,7 @@ class PetContainer extends Component {
 					</Grid.Column>
 					<Grid.Column>
 						<PetList pets={this.state.pets} deletePet={this.deletePet} openAndEditPet={this.openAndEditPet}  openViewPetModal={this.openViewPetModal}/>
-						<EditPet open={this.state.showPetEditModal} petToEdit={this.state.petToEdit} handlePetEditChange={this.handlePetEditChange} closeAndEditPet={this.closeAndEditPet} />
+						<EditPet open={this.state.showPetEditModal} petToEdit={this.state.petToEdit} handlePetEditChange={this.handlePetEditChange} breedData={this.breedData} peopleData={this.peopleData} dogsData={this.dogsData} fixedData={this.fixedData} closeAndEditPet={this.closeAndEditPet} />
 						<PetView open={this.state.petViewModal} petToView={this.state.petToView} closeViewPetModal={this.closeViewPetModal} />
 					</Grid.Column>
 				</Grid.Row>

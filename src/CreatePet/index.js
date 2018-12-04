@@ -54,14 +54,14 @@ class CreatePet extends Component {
 					<Form.Group>
 					</Form.Group>
 					<Form.Group>
-						<Form.Input label='Age' type='number' placeholder='Age?' name='age' width={2} value={this.state.age} onChange={this.updatePet}/>
-						<Form.Input label='Weight' type='text' placeholder='Weight?' name='weight' width={5} value={this.state.weight} onChange={this.updatePet}/>
+						<Form.Input label='Age' type='number' placeholder='Age?' name='age' width={2} onChange={this.updatePet}/>
+						<Form.Input label='Weight' type='text' placeholder='Weight?' name='weight' width={5} onChange={this.updatePet}/>
 						<Form.Input label='Photo URL' type='text' placeholder='Photo URL' name='pet_photo' width={9} value={this.state.pet_photo} onChange={this.updatePet}/>
 					</Form.Group>
-						<Dropdown label='Spayed/Neutered?' type='text' placeholder='Spayed/Neutered?' name='fixed' width={8} value={this.state.fixed} fluid selection options={fixed} onChange={this.fixedData} />
+						<Dropdown label='Spayed/Neutered?' type='text' placeholder='Spayed/Neutered?' name='fixed' width={8} fluid selection options={fixed} onChange={this.fixedData} />
 						<Dropdown label='Breed' type='text' placeholder='Breed?' name='breed' width={8} fluid search selection options={breeds} onChange={this.breedData} />
-						<Dropdown label='Good With People?' type='text' placeholder='Good With People?' name='likes_people' width={8} value={this.setState.likes_people} fluid selection options={people} onChange={this.peopleData} />
-						<Dropdown label='Good With Dogs?' type='text' placeholder='Good With Dogs?' width={8} value={this.state.likes_dogs} fluid selection options={dogs} onChange={this.dogsData} />
+						<Dropdown label='Good With People?' type='text' placeholder='Good With People?' name='likes_people' width={8} fluid selection options={people} onChange={this.peopleData} />
+						<Dropdown label='Good With Dogs?' type='text' placeholder='Good With Dogs?' width={8} fluid selection options={dogs} onChange={this.dogsData} />
 					<Form.Group>
 						<Form.Input label='Favorite Thing To Do?' type='text' placeholder='Favorite Thing to Do?' name='loves_to' width={16} value={this.state.loves_to} onChange={this.updatePet}/>
 					</Form.Group>
