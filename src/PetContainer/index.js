@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import CreatePet from '../CreatePet';
+import PetView from '../PetView';
 import PetList from '../PetList';
 import EditPet from '../EditPet';
 import getCookie from 'js-cookie';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Message } from 'semantic-ui-react';
 
 class PetContainer extends Component {
 	constructor() {
@@ -15,12 +16,43 @@ class PetContainer extends Component {
 				first_name: '',
 				middle_name: '',
 				last_name: '',
+				pet_photo: '',
 				age: null,
 				breed: '',
+				weight: null,
+				likes_people: '',
+				likes_dogs: '',
+				loves_to: '',
+				fav_treat: '',
+				vet_name: '',
+				vet_phone: '',
+				vet_address: '',
+				fixed: '',
 				owner: null,
 				_id: ''
 			},
+			petToView: {
+				first_name: '',
+				middle_name: '',
+				last_name: '',
+				pet_photo: '',
+				age: null,
+				breed: '',
+				weight: null,
+				likes_people: '',
+				likes_dogs: '',
+				loves_to: '',
+				fav_treat: '',
+				vet_name: '',
+				vet_phone: '',
+				vet_address: '',
+				owner: null,
+				fixed: '',
+				_id: ''
+			},
 			showPetEditModal: false,
+			petViewModal: false,
+			isLoggedIn: true,
 		}
 	}
 	getPet = async () => {
@@ -37,14 +69,22 @@ class PetContainer extends Component {
 	componentDidMount(){
 		// Mounting Pet API call
 		this.getPet().then(pets => {
-			this.setState({pets: pets.data})
+			if(pets.message === 'Must be logged in.') {
+				this.setState.isLoggedIn = true
+			} else {
+				this.setState({pets: pets.data})
+			}
 		}).catch((err) => {
 			console.log(err);
 		})
 	}
 	addPet = async (pet, e) => {
 		e.preventDefault();
+		console.log('%%%%%%%%%%%%%%%%%');
+		console.log('route was hit');
+		console.log('%%%%%%%%%%%%%%%%%');
 		pet.age = parseInt(pet.age)
+		pet.weight = parseInt(pet.weight)
 		const csrfCookie = getCookie('csrftoken');
 
 		try {
@@ -70,6 +110,19 @@ class PetContainer extends Component {
 			petToEdit: {
 				...pet
 			}
+		})
+	}
+	openViewPetModal = (pet) => {
+		this.setState({
+			petViewModal: true,
+			petToView: {
+				...pet
+			}
+		})
+	}
+	closeViewPetModal = (pet) => {
+		this.setState({
+			petViewModal: false,
 		})
 	}
 	handlePetEditChange = (e) => {
@@ -136,14 +189,22 @@ class PetContainer extends Component {
 	}
 	render(){
 		return(
-			<Grid columns={3} divided textAlign='center' style={{ height: '100%' }} verticalAlign='top' stackable>
+			<Grid columns={2} divided textAlign='center' style={{ height: '100%' }} verticalAlign='top'>
 				<Grid.Column>
-					<CreatePet addPet={this.addPet}/>
+					<Message hidden={this.state.isLoggedIn} negative>
+						You must be logged in to view this page.
+					</Message>
 				</Grid.Column>
-				<Grid.Column>
-					<PetList pets={this.state.pets} deletePet={this.deletePet} openAndEditPet={this.openAndEditPet} />
-					<EditPet open={this.state.showPetEditModal} petToEdit={this.state.petToEdit} handlePetEditChange={this.handlePetEditChange} closeAndEditPet={this.closeAndEditPet} />
-				</Grid.Column>
+				<Grid.Row>
+					<Grid.Column>
+						<CreatePet addPet={this.addPet}/>
+					</Grid.Column>
+					<Grid.Column>
+						<PetList pets={this.state.pets} deletePet={this.deletePet} openAndEditPet={this.openAndEditPet}  openViewPetModal={this.openViewPetModal}/>
+						<EditPet open={this.state.showPetEditModal} petToEdit={this.state.petToEdit} handlePetEditChange={this.handlePetEditChange} closeAndEditPet={this.closeAndEditPet} />
+						<PetView open={this.state.petViewModal} petToView={this.state.petToView} closeViewPetModal={this.closeViewPetModal} />
+					</Grid.Column>
+				</Grid.Row>
 			</Grid>
 		)
 	}

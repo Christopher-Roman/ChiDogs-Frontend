@@ -3,7 +3,7 @@ import CreatePhoto from '../CreatePhoto';
 import PhotoList from '../PhotoList';
 import ViewPhoto from '../ViewPhoto'
 import getCookie from 'js-cookie';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Message } from 'semantic-ui-react';
 
 
 class PhotoContainer extends Component {
@@ -17,7 +17,8 @@ class PhotoContainer extends Component {
 				picture_url: '',
 				created_by: null,
 				id: null
-			}
+			},
+			isLoggedIn: true
 		}
 	}
 	getPhotos = async () => {
@@ -33,6 +34,11 @@ class PhotoContainer extends Component {
 	}
 	componentDidMount() {
 		this.getPhotos().then(photos => {
+			if(photos.message === 'Must be logged in.') {
+				this.setState.isLoggedIn = true
+			} else {
+				this.setState({photos: photos.data})
+			}
 			this.setState({photos: photos.data})
 		}).catch((err) => {
 			console.log(err);
@@ -93,6 +99,11 @@ class PhotoContainer extends Component {
 	render() {
 		return (
 			<Grid columns={2} divided style={{ height: '100%' }} verticalAlign='top' stackable>
+				<Grid.Column>
+					<Message hidden={this.state.isLoggedIn} negative>
+						You must be logged in to view this page.
+					</Message>
+				</Grid.Column>
 				<Grid.Row>
 					<Grid.Column>
 						<CreatePhoto addPhoto={this.addPhoto} />

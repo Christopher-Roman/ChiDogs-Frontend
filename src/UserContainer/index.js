@@ -3,15 +3,18 @@ import EditPost from '../EditPost';
 import PostList from '../PostList';
 import CreatePost from '../CreatePost';
 import getCookie from 'js-cookie';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Message } from 'semantic-ui-react';
 
 class UserContainer extends Component {
 	constructor(){
 		super();
 
 		this.state = {
+			user: {
+				username: '',
+				user_photo: ''
+			},
 			posts: [],
-			photos: [],
 			postToEdit: {
 				post_body: ''
 			},
@@ -20,8 +23,8 @@ class UserContainer extends Component {
 			},
 			showPostEditModal: false,
 			showReplyEditModal: false,
-			showPhotoUploadModal: false,
-			showPostModal: false
+			showPostModal: false,
+			isLoggedIn: true
 		}
 	}
 	getPost = async () => {
@@ -38,7 +41,11 @@ class UserContainer extends Component {
 	componentDidMount(){
 		// Mounting Post API call
 		this.getPost().then(posts => {
-			this.setState({posts: posts.data})
+			if(posts.message === 'Must be logged in.') {
+				this.setState.isLoggedIn = true
+			} else {
+				this.setState({posts: posts.data})
+			}
 		}).catch((err) => {
 			console.log(err);
 		})
@@ -127,36 +134,22 @@ class UserContainer extends Component {
 			console.error(err)
 		}
 	}
-	addPhoto = async (photo, e) => {
-		e.preventDefault();
-		const csrfCookie = getCookie('csrftoken');
-
-		try {
-			const newPhoto = await fetch('http://localhost:8000/profile/photos/', {
-				method: 'POST',
-				credentials: 'include',
-				body: JSON.stringify(photo),
-				headers: {
-					'Content-Type': 'application/json',
-					'X-CSRFToken': csrfCookie
-				}
-			})
-			const newPhotoParsed = newPhoto.json();
-			this.setState({photos: [...this.state.photos, newPhotoParsed]})
-		} catch(err) {
-			console.log(err);
-		}
-	}
 	render(){
+		console.log(this.state);
 		return(
 			<Grid columns={2} divided textAlign='center' style={{ height: '100%' }} verticalAlign='top' stackable>
 				<Grid.Column>
+					<Message hidden={this.state.isLoggedIn} negative>
+						You must be logged in to view this page.
+					</Message>
 				</Grid.Column>
-				<Grid.Column>
-					<CreatePost addPost={this.addPost}/>
-					<PostList posts={this.state.posts} deletePost={this.deletePost} openAndEditPost={this.openAndEditPost} />
-					<EditPost open={this.state.showPostEditModal} postToEdit={this.state.postToEdit} handlePostEditChange={this.handlePostEditChange} closeAndEditPost={this.closeAndEditPost} />
-				</Grid.Column>
+				<Grid.Row>
+					<Grid.Column>
+						<CreatePost addPost={this.addPost}/>
+						<PostList posts={this.state.posts} deletePost={this.deletePost} openAndEditPost={this.openAndEditPost} />
+						<EditPost open={this.state.showPostEditModal} postToEdit={this.state.postToEdit} handlePostEditChange={this.handlePostEditChange} closeAndEditPost={this.closeAndEditPost} />
+					</Grid.Column>
+				</Grid.Row>
 			</Grid>
 		)
 	}
