@@ -1,8 +1,12 @@
 import React from 'react'
-import { Form, Button, Grid } from 'semantic-ui-react';
+import { Form, Button, Grid, Segment, Divider } from 'semantic-ui-react';
 
 const Login = (props) => {
 	return (
+		<div>
+		<Segment>
+			<Divider hidden />
+		</Segment>
 		<Grid columns={2} divided textAlign='center' style={{ width: '100%' }} verticalAlign='top' stackable>
 			<Grid.Column>
 				<Form onSubmit={props.handleSubmit}>
@@ -18,6 +22,7 @@ const Login = (props) => {
 				</Form>
 			</Grid.Column>
 		</Grid>
+		</div>
 	)
 }
 

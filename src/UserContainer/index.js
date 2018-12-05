@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { HOST } from '../Secrets/secrets.js'
 import EditPost from '../EditPost';
 import PostList from '../PostList';
 import CreatePost from '../CreatePost';
@@ -10,26 +11,22 @@ class UserContainer extends Component {
 		super();
 
 		this.state = {
-			user: {
-				username: '',
-				user_photo: ''
-			},
 			posts: [],
 			postToEdit: {
-				post_body: ''
+				post_body: '',
+				created_by_id: ''
 			},
 			replyToEdit: {
 				reply_body: ''
 			},
 			showPostEditModal: false,
-			showReplyEditModal: false,
 			showPostModal: false,
 			isLoggedIn: true
 		}
 	}
 	getPost = async () => {
 		const csrfCookie = getCookie('csrftoken');
-		const posts = await fetch('http://localhost:8000/profile/posts/', {
+		const posts = await fetch(HOST + '/profile/posts/', {
 			'credentials': 'include',
 			headers:{
 				'X-CSRFToken': csrfCookie
@@ -55,7 +52,7 @@ class UserContainer extends Component {
 		const csrfCookie = getCookie('csrftoken');
 
 		try {
-			const newPost = await fetch('http://localhost:8000/profile/posts/', {
+			const newPost = await fetch(HOST + '/profile/posts/', {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify(posts),
@@ -90,7 +87,7 @@ class UserContainer extends Component {
 		e.preventDefault();
 		try {
 			const csrfCookie = getCookie('csrftoken');
-			const editPost = await fetch('http://localhost:8000/profile/posts/' + this.state.postToEdit.id + '/', {
+			const editPost = await fetch(HOST + '/profile/posts/' + this.state.postToEdit.id + '/', {
 				method: 'PUT',
 				credentials: 'include',
 				body: JSON.stringify({
@@ -119,7 +116,7 @@ class UserContainer extends Component {
 	deletePost = async (id) => {
 		try {
 			const csrfCookie = getCookie('csrftoken');
-			const deletePost = await fetch('http://localhost:8000/profile/posts/' + id, {
+			const deletePost = await fetch(HOST + '/profile/posts/' + id, {
 				method: 'DELETE',
 				credentials: 'include',
 				headers: {
@@ -135,8 +132,8 @@ class UserContainer extends Component {
 		}
 	}
 	render(){
-		console.log(this.state);
 		return(
+			<div>
 			<Grid columns={2} divided textAlign='center' style={{ height: '100%' }} verticalAlign='top' stackable>
 				<Grid.Column>
 					<Message hidden={this.state.isLoggedIn} negative>
@@ -151,6 +148,7 @@ class UserContainer extends Component {
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
+			</div>
 		)
 	}
 }

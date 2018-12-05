@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { HOST } from '../Secrets/secrets.js'
 import CreatePhoto from '../CreatePhoto';
 import PhotoList from '../PhotoList';
 import ViewPhoto from '../ViewPhoto'
@@ -23,7 +24,7 @@ class PhotoContainer extends Component {
 	}
 	getPhotos = async () => {
 		const csrfCookie = getCookie('csrftoken');
-		const photos = await fetch('http://localhost:8000/profile/photos', {
+		const photos = await fetch(HOST + '/profile/photos', {
 			'credentials': 'include',
 			headers: {
 				'X-CSRFToken': csrfCookie
@@ -49,7 +50,7 @@ class PhotoContainer extends Component {
 		const csrfCookie = getCookie('csrftoken');
 
 		try {
-			const newPhoto = await fetch('http://localhost:8000/profile/photos/', {
+			const newPhoto = await fetch(HOST + '/profile/photos/', {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify(photo),
@@ -68,7 +69,7 @@ class PhotoContainer extends Component {
 	deletePhoto = async (id) => {
 		try {
 			const csrfCookie = getCookie('csrftoken');
-			const deletePhoto = await fetch('http://localhost:8000/profile/photos/' + id, {
+			const deletePhoto = await fetch(HOST + '/profile/photos/' + id, {
 				method: 'DELETE',
 				credentials: 'include',
 				headers: {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { HOST } from '../Secrets/secrets.js'
 import CreatePet from '../CreatePet';
 import PetView from '../PetView';
 import PetList from '../PetList';
@@ -57,7 +58,7 @@ class PetContainer extends Component {
 	}
 	getPet = async () => {
 		const csrfCookie = getCookie('csrftoken');
-		const pets = await fetch('http://localhost:8000/profile/pets/', {
+		const pets = await fetch(HOST + '/profile/pets/', {
 			'credentials': 'include',
 			headers: {
 				'X-CSRFToken': csrfCookie
@@ -85,7 +86,7 @@ class PetContainer extends Component {
 		const csrfCookie = getCookie('csrftoken');
 
 		try {
-			const newPet = await fetch('http://localhost:8000/profile/pets/', {
+			const newPet = await fetch(HOST + '/profile/pets/', {
 		        method: 'POST',
 		        credentials: 'include',
 		        body: JSON.stringify(pet),
@@ -94,7 +95,6 @@ class PetContainer extends Component {
 		          'X-CSRFToken': csrfCookie
 				}
 			})
-			console.log(newPet);
 			const newPetParsed = await newPet.json();
 			this.setState({pets: [...this.state.pets, newPetParsed.data]})
 		} catch(err){
@@ -166,7 +166,7 @@ class PetContainer extends Component {
 		e.preventDefault();
 		try {
 			const csrfCookie = getCookie('csrftoken');
-			const editPet = await fetch('http://localhost:8000/profile/pets/' + this.state.petToEdit.id + '/', {
+			const editPet = await fetch(HOST + '/profile/pets/' + this.state.petToEdit.id + '/', {
 				method: 'PUT',
 				credentials: 'include',
 				body: JSON.stringify({
@@ -209,7 +209,7 @@ class PetContainer extends Component {
 	deletePet = async (id) => {
 		try {
 			const csrfCookie = getCookie('csrftoken');
-			const deletePet = await fetch('http://localhost:8000/profile/pets/' + id, {
+			const deletePet = await fetch(HOST + '/profile/pets/' + id, {
 				method: 'DELETE',
 				credentials: 'include',
 				headers: {

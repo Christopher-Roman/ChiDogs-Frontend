@@ -1,4 +1,5 @@
 import './App.css';
+import { HOST } from './Secrets/secrets.js'
 import { Route, Switch, withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
 import Login from './Login'
@@ -6,7 +7,8 @@ import Register from './Register';
 import Header from './Header';
 import PetContainer from './PetContainer';
 import PhotoContainer from './PhotoContainer';
-import UserInfo from './UserInfo';
+import UserContainer from './UserContainer';
+import UserInfo from './UserInfo'
 import getCookie from 'js-cookie';
 
 
@@ -22,25 +24,19 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      loginInfo: {
         username: '',
-        password: ''
-      },
-      user: {
-        username: '',
-        user_image: ''
-      },
-      isValid: true
+        password: '',
+        isValid: true
     }
   }
-  componentDidMount(){
-    this.getToken();
-  }
+  // componentDidMount(){
+  //   this.getToken();
+  // }
   handleLogout = async (e) => {
     e.preventDefault();
     try {
       const cookie = getCookie('csrftoken');
-      const logoutRequest = await fetch('http://localhost:8000/users/logout/', {
+      const logoutRequest = await fetch(HOST + '/users/logout/', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -64,7 +60,7 @@ class App extends Component {
     }
   }
   getToken = async () => {
-    const token = await fetch('http://localhost:8000/users/getToken', {
+    const token = await fetch(HOST + '/users/getToken', {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -77,7 +73,7 @@ class App extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     const csrfCookie = getCookie('csrftoken')
-    const loginResponse = await fetch('http://localhost:8000/users/login/', {
+    const loginResponse = await fetch(HOST + '/users/login/', {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(this.state),
@@ -101,13 +97,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header handleLogout={this.handleLogout} />
+        <Header handleLogout={this.handleLogout} username={this.state.username} />
         <Switch>
           <Route exact path="/" render={(props) => <Login {...props} handleSubmit={this.handleSubmit} handleChange={this.handleChange} />} />
           <Route exact path="/register" component={Register}/>
-          <Route exact path="/profile" render={(props) => <UserInfo {...props} user={this.state.user.username}/>} />
+          <Route exact path="/profile" component={UserContainer} />
           <Route exact path="/profile/pets" component={PetContainer}/>
           <Route exact path="/profile/photos" component={PhotoContainer}/>
+          <Route exact path="/profile/users" component={UserInfo} />
           <Route component={My404}/>
         </Switch>
       </div>

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Modal, Form, Button, Label, Header, TransitionablePortal, Dropdown } from 'semantic-ui-react'
+import { Modal, Form, Button, Header, TransitionablePortal, Dropdown } from 'semantic-ui-react'
 import { breeds, people, dogs, fixed } from '../Variables/variables.js'
 
 const EditPet = (props) => {
-	console.log(props);
 	return (
 		<TransitionablePortal open={props.open} transition={{ animation: 'fly down', duration: 600}}>
 			<Modal open={props.open}>
