@@ -7,6 +7,10 @@ import EditPet from '../EditPet';
 import getCookie from 'js-cookie';
 import { Grid, Message } from 'semantic-ui-react';
 
+if(Object.keys(process.env).findIndex(key=>key=='REACT_APP_LOCAL_VERSION')){
+	import { HOST } from '../Secrets/secrets.js'
+} 
+
 class PetContainer extends Component {
 	constructor() {
 		super();

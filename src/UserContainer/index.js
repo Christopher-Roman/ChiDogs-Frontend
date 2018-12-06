@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { HOST } from '../Secrets/secrets.js'
 import EditPost from '../EditPost';
 import PostList from '../PostList';
 import CreatePost from '../CreatePost';
 import getCookie from 'js-cookie';
 import { Grid, Message } from 'semantic-ui-react';
+
+if(Object.keys(process.env).findIndex(key=>key=='REACT_APP_LOCAL_VERSION')){
+	import { HOST } from '../Secrets/secrets.js'
+} 
 
 class UserContainer extends Component {
 	constructor(){

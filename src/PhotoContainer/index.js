@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { HOST } from '../Secrets/secrets.js'
 import CreatePhoto from '../CreatePhoto';
 import PhotoList from '../PhotoList';
 import ViewPhoto from '../ViewPhoto'
 import getCookie from 'js-cookie';
 import { Grid, Message } from 'semantic-ui-react';
 
+if(Object.keys(process.env).findIndex(key=>key=='REACT_APP_LOCAL_VERSION')){
+	import { HOST } from '../Secrets/secrets.js'
+} 
 
 class PhotoContainer extends Component {
 	constructor(){
