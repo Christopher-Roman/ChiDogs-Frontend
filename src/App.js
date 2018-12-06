@@ -12,6 +12,8 @@ import UserInfo from './UserInfo'
 import getCookie from 'js-cookie';
 
 
+import { apiUrl } from './apiURL.js'
+
 const My404 = () => {
   return (
     <div>
