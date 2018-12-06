@@ -15,7 +15,7 @@ class UserInfo extends Component {
 	}
 	getPets = async () => {
 		const csrfCookie = getCookie('csrftoken');
-		const pets = await fetch(HOST + '/users/user/', {
+		const pets = await fetch(apiUrl + '/users/user/', {
 			credentials: 'include',
 			headers: {
 				'X-CSRFToken': csrfCookie
