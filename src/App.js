@@ -12,7 +12,7 @@ import getCookie from 'js-cookie';
 
 
 import apiUrl from './apiURL.js'
-
+console.log(apiUrl);
 
 const My404 = () => {
   return (
