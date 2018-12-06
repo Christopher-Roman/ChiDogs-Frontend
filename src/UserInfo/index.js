@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { HOST } from '../Secrets/secrets.js'
 import UserList from '../UserList'
 import getCookie from 'js-cookie';
+import apiUrl from '../apiURL.js'
 
 class UserInfo extends Component {
 	constructor(){
