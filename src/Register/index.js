@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { HOST } from '../Secrets/secrets.js'
 import getCookie from 'js-cookie';
+import apiUrl from '../apiURL.js'
 import { Form, Button, Grid, Message, Segment } from 'semantic-ui-react';
 
 class Register extends Component {
@@ -24,7 +24,7 @@ class Register extends Component {
 	}
 	handleSubmit = async (e) => {
 		const csrfCookie = getCookie('csrftoken');
-		const registerReponse = await fetch(HOST + '/users/', {
+		const registerReponse = await fetch(apiUrl + '/users/', {
 			method: 'POST',
 			credentials: 'include',
 			body: JSON.stringify(this.state),
