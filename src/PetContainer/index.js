@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { HOST } from '../Secrets/secrets.js'
 import CreatePet from '../CreatePet';
 import PetView from '../PetView';
 import PetList from '../PetList';
