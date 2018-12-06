@@ -5,10 +5,7 @@ import PetList from '../PetList';
 import EditPet from '../EditPet';
 import getCookie from 'js-cookie';
 import { Grid, Message } from 'semantic-ui-react';
-
-if(Object.keys(process.env).findIndex(key=>key=='REACT_APP_LOCAL_VERSION')){
-	import { HOST } from '../Secrets/secrets.js'
-} 
+import apiUrl from '../apiURL.js'
 
 class PetContainer extends Component {
 	constructor() {
@@ -61,7 +58,7 @@ class PetContainer extends Component {
 	}
 	getPet = async () => {
 		const csrfCookie = getCookie('csrftoken');
-		const pets = await fetch(HOST + '/profile/pets/', {
+		const pets = await fetch(apiUrl + '/profile/pets/', {
 			'credentials': 'include',
 			headers: {
 				'X-CSRFToken': csrfCookie
@@ -89,7 +86,7 @@ class PetContainer extends Component {
 		const csrfCookie = getCookie('csrftoken');
 
 		try {
-			const newPet = await fetch(HOST + '/profile/pets/', {
+			const newPet = await fetch(apiUrl + '/profile/pets/', {
 		        method: 'POST',
 		        credentials: 'include',
 		        body: JSON.stringify(pet),
@@ -169,7 +166,7 @@ class PetContainer extends Component {
 		e.preventDefault();
 		try {
 			const csrfCookie = getCookie('csrftoken');
-			const editPet = await fetch(HOST + '/profile/pets/' + this.state.petToEdit.id + '/', {
+			const editPet = await fetch(apiUrl + '/profile/pets/' + this.state.petToEdit.id + '/', {
 				method: 'PUT',
 				credentials: 'include',
 				body: JSON.stringify({
@@ -212,7 +209,7 @@ class PetContainer extends Component {
 	deletePet = async (id) => {
 		try {
 			const csrfCookie = getCookie('csrftoken');
-			const deletePet = await fetch(HOST + '/profile/pets/' + id, {
+			const deletePet = await fetch(apiUrl + '/profile/pets/' + id, {
 				method: 'DELETE',
 				credentials: 'include',
 				headers: {

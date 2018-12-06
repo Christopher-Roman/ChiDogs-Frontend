@@ -11,11 +11,8 @@ import UserInfo from './UserInfo'
 import getCookie from 'js-cookie';
 
 
-import { apiUrl } from './apiURL.js'
+import apiUrl from './apiURL.js'
 
-if(Object.keys(process.env).findIndex(key=>key=='REACT_APP_LOCAL_VERSION')){
-  import { HOST } from '../Secrets/secrets.js'
-} 
 
 const My404 = () => {
   return (
@@ -41,7 +38,7 @@ class App extends Component {
     e.preventDefault();
     try {
       const cookie = getCookie('csrftoken');
-      const logoutRequest = await fetch(HOST + '/users/logout/', {
+      const logoutRequest = await fetch(apiUrl + '/users/logout/', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -65,7 +62,7 @@ class App extends Component {
     }
   }
   getToken = async () => {
-    const token = await fetch(HOST + '/users/getToken', {
+    const token = await fetch(apiUrl + '/users/getToken', {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -78,7 +75,7 @@ class App extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     const csrfCookie = getCookie('csrftoken')
-    const loginResponse = await fetch(HOST + '/users/login/', {
+    const loginResponse = await fetch(apiUrl + '/users/login/', {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(this.state),

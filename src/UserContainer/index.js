@@ -4,10 +4,7 @@ import PostList from '../PostList';
 import CreatePost from '../CreatePost';
 import getCookie from 'js-cookie';
 import { Grid, Message } from 'semantic-ui-react';
-
-if(Object.keys(process.env).findIndex(key=>key=='REACT_APP_LOCAL_VERSION')){
-	import { HOST } from '../Secrets/secrets.js'
-} 
+import apiUrl from '../apiURL.js'
 
 class UserContainer extends Component {
 	constructor(){
@@ -29,7 +26,7 @@ class UserContainer extends Component {
 	}
 	getPost = async () => {
 		const csrfCookie = getCookie('csrftoken');
-		const posts = await fetch(HOST + '/profile/posts/', {
+		const posts = await fetch(apiUrl + '/profile/posts/', {
 			'credentials': 'include',
 			headers:{
 				'X-CSRFToken': csrfCookie
@@ -55,7 +52,7 @@ class UserContainer extends Component {
 		const csrfCookie = getCookie('csrftoken');
 
 		try {
-			const newPost = await fetch(HOST + '/profile/posts/', {
+			const newPost = await fetch(apiUrl + '/profile/posts/', {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify(posts),
@@ -90,7 +87,7 @@ class UserContainer extends Component {
 		e.preventDefault();
 		try {
 			const csrfCookie = getCookie('csrftoken');
-			const editPost = await fetch(HOST + '/profile/posts/' + this.state.postToEdit.id + '/', {
+			const editPost = await fetch(apiUrl + '/profile/posts/' + this.state.postToEdit.id + '/', {
 				method: 'PUT',
 				credentials: 'include',
 				body: JSON.stringify({
@@ -119,7 +116,7 @@ class UserContainer extends Component {
 	deletePost = async (id) => {
 		try {
 			const csrfCookie = getCookie('csrftoken');
-			const deletePost = await fetch(HOST + '/profile/posts/' + id, {
+			const deletePost = await fetch(apiUrl + '/profile/posts/' + id, {
 				method: 'DELETE',
 				credentials: 'include',
 				headers: {

@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import CreatePhoto from '../CreatePhoto';
 import PhotoList from '../PhotoList';
 import ViewPhoto from '../ViewPhoto'
 import getCookie from 'js-cookie';
 import { Grid, Message } from 'semantic-ui-react';
+import apiUrl from '../apiURL.js'
 
-if(Object.keys(process.env).findIndex(key=>key=='REACT_APP_LOCAL_VERSION')){
-	import { HOST } from '../Secrets/secrets.js'
-} 
 
 class PhotoContainer extends Component {
 	constructor(){
@@ -26,7 +24,7 @@ class PhotoContainer extends Component {
 	}
 	getPhotos = async () => {
 		const csrfCookie = getCookie('csrftoken');
-		const photos = await fetch(HOST + '/profile/photos', {
+		const photos = await fetch(apiUrl + '/profile/photos', {
 			'credentials': 'include',
 			headers: {
 				'X-CSRFToken': csrfCookie
@@ -52,7 +50,7 @@ class PhotoContainer extends Component {
 		const csrfCookie = getCookie('csrftoken');
 
 		try {
-			const newPhoto = await fetch(HOST + '/profile/photos/', {
+			const newPhoto = await fetch(apiUrl + '/profile/photos/', {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify(photo),
@@ -71,7 +69,7 @@ class PhotoContainer extends Component {
 	deletePhoto = async (id) => {
 		try {
 			const csrfCookie = getCookie('csrftoken');
-			const deletePhoto = await fetch(HOST + '/profile/photos/' + id, {
+			const deletePhoto = await fetch(apiUrl + '/profile/photos/' + id, {
 				method: 'DELETE',
 				credentials: 'include',
 				headers: {
