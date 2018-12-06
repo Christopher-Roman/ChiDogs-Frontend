@@ -2,9 +2,11 @@
 
 ## What is ChiDogs? ##
 
-As a dog owner with a very social dog, heading to the dog park was always an exciting venture. But, getting there and not seeing any other dogs left Duckie (my Boxer) a bit deflated. Sure, she loves to run, but she loves being chased by other dogs and socializing in general. That's where ChiDogs comes in to help. 
+As a dog owner with a very social dog, heading to the dog park was always an exciting venture. But, getting there and not seeing any other dogs left Duckie (my Boxer) a bit deflated. Sure, she loves to run, but she loves being chased by other dogs and socializing in general. 
 
-Wouldn't you love to know if other people were heading to the dog park you're heading too? Or, perhaps knowing which dog park is more likely to have people there with their dogs? In a day and age where we get pictures of meals before they are eaten and people checking in at gyms, why isn't there an open community board to tell people, "Hey, I'm going to the Montrose Dog Beach today!". Now there is. ChiDogs is an open social network for dogs and the people who are bringing them to the parks. It is a community to share which dog park you're heading to, favorite dog park locations, and information about your dog. The goal of ChiDogs is to assist in creating and fostering friendships for both the users and their dogs.  
+Wouldn't you love to know if other people were heading to the dog park you're heading too? Or, perhaps knowing which dog park is more likely to have people there with their dogs? That's where ChiDogs comes in to help!
+
+In a day and age where we get pictures of meals before they are eaten and people checking in at gyms, why isn't there an open community board to tell people, "Hey, I'm going to the Montrose Dog Beach today!". Now there is. ChiDogs is an open social network for dogs and the people who are bringing them to the parks. It is a community to share which dog park you're heading to, favorite dog park locations, and information about your dog. The goal of ChiDogs is to assist in creating and fostering friendships for both the users and their dogs.  
 
 ## Technology Used ##
 
