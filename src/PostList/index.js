@@ -6,8 +6,7 @@ const PostList = (props) => {
 		return (
 			<Card key={post.id}>
 				<Card.Content>
-					<Card.Header>{post.created_by}</Card.Header>
-					<Card.Description>{post.post_body}</Card.Description>
+					<Card.Header>{post.post_body}</Card.Header>
 				</Card.Content>
 				<Card.Content extra>
 					<Button onClick={props.openAndEditPost.bind(null, post)}>Edit</Button>

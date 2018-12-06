@@ -106,13 +106,13 @@ class PhotoContainer extends Component {
 					</Message>
 				</Grid.Column>
 				<Grid.Row>
-					<Grid.Column>
+					<Grid.Row>
 						<CreatePhoto addPhoto={this.addPhoto} />
-					</Grid.Column>
-					<Grid.Column>
+					</Grid.Row>
+					<Grid.Row>
 						<PhotoList photos={this.state.photos} openPhotoModal={this.openPhotoModal} deletePhoto={this.deletePhoto}/>
 						<ViewPhoto open={this.state.viewPhotosModal} photoToView={this.state.photoToView} closePhotoModal={this.closePhotoModal} />
-					</Grid.Column>
+					</Grid.Row>
 				</Grid.Row>
 			</Grid>
 		)

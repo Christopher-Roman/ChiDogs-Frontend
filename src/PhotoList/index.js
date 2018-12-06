@@ -6,7 +6,7 @@ const PhotoList = (props) => {
 		return (
 			<Card key={photo.id}>
 				<Card.Content>
-					<Image src={photo.picture_url} />
+					<Image size='medium'src={photo.picture_url} rounded />
 				</Card.Content>
 				<Button floated='left' color='green' size='large' onClick={props.openPhotoModal.bind(null, photo)}>View</Button>
 				<Button floated='right' color='red' size='mini' onClick={props.deletePhoto.bind(null, photo.id)}>Delete Photo</Button>
