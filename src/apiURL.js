@@ -6,7 +6,7 @@ let apiUrl = '';
 if(Object.keys(process.env).findIndex(key=>key=='REACT_APP_LOCAL_VERSION')){
 	apiUrl = 'http://localhost:8000'
 } else {
-	apiUrl = 'http://chidogs.herokuapp.com/'
+	apiUrl = 'http://chidog.herokuapp.com/'
 }
 
 export default apiUrl
