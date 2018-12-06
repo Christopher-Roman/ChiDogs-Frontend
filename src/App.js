@@ -1,5 +1,4 @@
 import './App.css';
-import { HOST } from './Secrets/secrets.js'
 import { Route, Switch, withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
 import Login from './Login'
@@ -13,6 +12,10 @@ import getCookie from 'js-cookie';
 
 
 import { apiUrl } from './apiURL.js'
+
+if(Object.keys(process.env).findIndex(key=>key=='REACT_APP_LOCAL_VERSION')){
+  import { HOST } from '../Secrets/secrets.js'
+} 
 
 const My404 = () => {
   return (
