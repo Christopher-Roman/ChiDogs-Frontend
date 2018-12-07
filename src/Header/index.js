@@ -26,13 +26,13 @@ const HeaderApp = (props) => {
 		        </Menu.Item>
 				<Menu.Menu position='right'>
 					<Menu.Item>
-			        <Link to="/" onClick={props.handleLogout}><Icon name='log out'/>Logout</Link>
+			        <Link to="/login" onClick={props.handleLogout}><Icon name='log out'/>Logout</Link>
 			        </Menu.Item>
 			        <Menu.Item>
-			        <Link to="/register">Register</Link>
+			        <Link to="/">Register</Link>
 			        </Menu.Item>
 			        <Menu.Item>
-			        <Link to="/">Login</Link>
+			        <Link to="/login">Login</Link>
 			        </Menu.Item>
 			    </Menu.Menu>
 			</Menu>

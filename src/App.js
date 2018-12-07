@@ -101,8 +101,8 @@ class App extends Component {
       <div className="App">
         <Header handleLogout={this.handleLogout} username={this.state.username} />
         <Switch>
-          <Route exact path="/" render={(props) => <Login {...props} handleSubmit={this.handleSubmit} handleChange={this.handleChange} />} />
-          <Route exact path="/register" component={Register}/>
+          <Route exact path="/login" render={(props) => <Login {...props} handleSubmit={this.handleSubmit} handleChange={this.handleChange} />} />
+          <Route exact path="/" component={Register}/>
           <Route exact path="/profile" component={UserContainer} />
           <Route exact path="/profile/pets" component={PetContainer}/>
           <Route exact path="/profile/photos" component={PhotoContainer}/>

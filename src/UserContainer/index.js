@@ -134,7 +134,7 @@ class UserContainer extends Component {
 	render(){
 		return(
 			<div>
-			<Grid columns={2} divided textAlign='center' style={{ height: '100%' }} verticalAlign='top' stackable>
+			<Grid columns={3} divided textAlign='center' style={{ height: '100%' }} verticalAlign='top' centered>
 				<Grid.Column>
 					<Message hidden={this.state.isLoggedIn} negative>
 						You must be logged in to view this page.
