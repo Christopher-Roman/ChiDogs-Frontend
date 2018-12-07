@@ -31,9 +31,9 @@ class App extends Component {
         isValid: true
     }
   }
-  // componentDidMount(){
-  //   this.getToken();
-  // }
+  componentDidMount(){
+    this.getToken();
+  }
   handleLogout = async (e) => {
     e.preventDefault();
     try {
