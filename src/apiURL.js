@@ -3,7 +3,7 @@
 
 let apiUrl;
 
-if(Object.keys(process.env).findIndex(key => key=='REACT_APP_LOCAL_VERSION') == -1){
+if(Object.keys(process.env).findIndex(key => key==='REACT_APP_LOCAL_VERSION') === -1){
 	apiUrl = 'https://chidogs.herokuapp.com'
 } else {
 	apiUrl = 'http://localhost:8000'

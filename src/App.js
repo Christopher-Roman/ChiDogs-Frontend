@@ -51,7 +51,7 @@ class App extends Component {
 
       if (logoutRequestParsed.data === 'Logout Successful') {
         console.log(`Logout Successful`);
-        this.props.history.push('/')                            // Redirect to Login
+        this.props.history.push('/login')
       
       } else {
         console.log(`logoutRequestParsed.error: `, logoutRequestParsed.error);
