@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import apiUrl from '../apiURL.js';
 import getCookie from 'js-cookie';
+import 
 
 
 class GlobalPost extends Component {
@@ -36,5 +37,10 @@ class GlobalPost extends Component {
 		}).catch((err) => {
 			console.log(err);
 		})
+	}
+	render() {
+		return (
+
+		)
 	}
 }
