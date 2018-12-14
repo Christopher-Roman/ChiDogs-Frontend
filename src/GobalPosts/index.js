@@ -24,7 +24,17 @@ class GlobalPost extends Component {
 	}
 	componentDidMount() {
 		this.getPosts().then((posts) => {
-			if
+			if(posts.message === 'Must be logged in'){
+				render(){
+					return (
+						<h1>You must be logged in to view this page.</h1>
+					)
+				}
+			} else {
+				this.setState({posts: posts.data})
+			}
+		}).catch((err) => {
+			console.log(err);
 		})
 	}
 }
