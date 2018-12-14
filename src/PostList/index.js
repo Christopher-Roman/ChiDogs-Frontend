@@ -18,7 +18,7 @@ const PostList = (props) => {
 
 	return (
 		<div>
-			<h3>Posts</h3>
+			<h3>Your Posts</h3>
 			<Card.Group className='centered'>
 				{posts}
 			</Card.Group>

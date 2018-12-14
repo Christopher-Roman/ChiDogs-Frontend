@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import EditPost from '../EditPost';
 import PostList from '../PostList';
 import CreatePost from '../CreatePost';
+import GlobalPostList from '../GlobalPostList';
 import getCookie from 'js-cookie';
 import { Grid, Message } from 'semantic-ui-react';
 import apiUrl from '../apiURL.js'
@@ -12,6 +13,7 @@ class UserContainer extends Component {
 
 		this.state = {
 			posts: [],
+			globalPosts: [],
 			postToEdit: {
 				post_body: '',
 				created_by_id: ''
@@ -35,6 +37,18 @@ class UserContainer extends Component {
 		const postParsedResponse = posts.json()
 		return postParsedResponse
 	}
+	getGlobalPosts = async () => {
+		const csrfCookie = getCookie('csrftoken')
+		const globalPosts = await fetch(apiUrl + '/users/post', {
+			credentials: 'include',
+			headers: {
+				'X-CSRFToken': csrfCookie
+			}
+		});
+		const parsedGlobalPostResponse = await globalPosts.json();
+		console.log(parsedGlobalPostResponse);
+		return parsedGlobalPostResponse;
+	}
 	componentDidMount(){
 		// Mounting Post API call
 		this.getPost().then(posts => {
@@ -42,6 +56,15 @@ class UserContainer extends Component {
 				this.setState.isLoggedIn = true
 			} else {
 				this.setState({posts: posts.data})
+			}
+		}).catch((err) => {
+			console.log(err);
+		})
+		this.getGlobalPosts().then((posts) => {
+			if(posts.message === 'Must be logged in'){
+				console.log('You must be logged in');
+			} else {
+				this.setState({globalPosts: posts.data})
 			}
 		}).catch((err) => {
 			console.log(err);
@@ -133,22 +156,23 @@ class UserContainer extends Component {
 	}
 	render(){
 		return(
-			<div>
-			<Grid columns={3} divided textAlign='center' style={{ height: '100%' }} verticalAlign='top' centered>
+			<Grid columns={1} divided >
 				<Grid.Column>
 					<Message hidden={this.state.isLoggedIn} negative>
 						You must be logged in to view this page.
 					</Message>
 				</Grid.Column>
 				<Grid.Row>
-					<Grid.Column>
+					<Grid.Column width={8}>
 						<CreatePost addPost={this.addPost}/>
 						<PostList posts={this.state.posts} deletePost={this.deletePost} openAndEditPost={this.openAndEditPost} />
 						<EditPost open={this.state.showPostEditModal} postToEdit={this.state.postToEdit} handlePostEditChange={this.handlePostEditChange} closeAndEditPost={this.closeAndEditPost} />
 					</Grid.Column>
+					<Grid.Column width={8}>
+						<GlobalPostList posts={this.state.globalPosts} />
+					</Grid.Column>
 				</Grid.Row>
 			</Grid>
-			</div>
 		)
 	}
 }
