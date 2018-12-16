@@ -50,15 +50,15 @@ class App extends Component {
       const logoutRequestParsed = await logoutRequest.json();
 
       if (logoutRequestParsed.data === 'Logout Successful') {
-        console.log(`Logout Successful`);
+        console.log('Logout Successful');
         this.props.history.push('/login')
       
       } else {
-        console.log(`logoutRequestParsed.error: `, logoutRequestParsed.error);
+        console.log('logoutRequestParsed.error: ', logoutRequestParsed.error);
       }
 
     } catch(err){
-      console.error(`Error catch in handleLogout: `, err);
+      console.error('Error catch in handleLogout: ', err);
     }
   }
   getToken = async () => {
