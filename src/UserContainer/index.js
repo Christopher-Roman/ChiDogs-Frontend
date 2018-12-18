@@ -169,7 +169,6 @@ class UserContainer extends Component {
 						<EditPost open={this.state.showPostEditModal} postToEdit={this.state.postToEdit} handlePostEditChange={this.handlePostEditChange} closeAndEditPost={this.closeAndEditPost} />
 					</Grid.Column>
 					<Grid.Column width={8}>
-						<GlobalPostList posts={this.state.globalPosts} />
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
