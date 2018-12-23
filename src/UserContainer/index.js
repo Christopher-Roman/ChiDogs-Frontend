@@ -46,14 +46,13 @@ class UserContainer extends Component {
 			}
 		});
 		const parsedGlobalPostResponse = await globalPosts.json();
-		console.log(parsedGlobalPostResponse);
 		return parsedGlobalPostResponse;
 	}
 	componentDidMount(){
 		// Mounting Post API call
 		this.getPost().then(posts => {
 			if(posts.message === 'Must be logged in.') {
-				this.setState.isLoggedIn = true
+				this.setState.isLoggedIn = false
 			} else {
 				this.setState({posts: posts.data})
 			}
@@ -62,7 +61,7 @@ class UserContainer extends Component {
 		})
 		this.getGlobalPosts().then((posts) => {
 			if(posts.message === 'Must be logged in'){
-				console.log('You must be logged in');
+				this.setState.isLoggedIn = false
 			} else {
 				this.setState({globalPosts: posts.data})
 			}
@@ -169,6 +168,7 @@ class UserContainer extends Component {
 						<EditPost open={this.state.showPostEditModal} postToEdit={this.state.postToEdit} handlePostEditChange={this.handlePostEditChange} closeAndEditPost={this.closeAndEditPost} />
 					</Grid.Column>
 					<Grid.Column width={8}>
+						<GlobalPostList posts={this.state.globalPosts} />
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
