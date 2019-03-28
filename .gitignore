@@ -5,6 +5,7 @@ secrets.js
 /node_modules
 /.pnp
 .pnp.js
+/github-battle
 
 # testing
 /coverage
